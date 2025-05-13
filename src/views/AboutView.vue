@@ -4,7 +4,7 @@
       <div class="bg-image"></div>
       <div class="profile-content">
         <div class="profile-photo">
-          <img src="about/profile.jpeg" alt="Profile Photo" />
+          <img :src="profileImage" alt="Profile" />
         </div>
       </div>
     </div>
