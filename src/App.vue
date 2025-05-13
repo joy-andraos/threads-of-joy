@@ -1,47 +1,73 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div id="app" :class="[
+    'min-h-screen',
+    'bg-gradient-to-br from-teal-50 to-green-30',
+    'flex',
+    'flex-col',
+    'overflow-x-hidden' /* Added this class to prevent horizontal overflow */
+  ]">
+    <Header />
+    <main class="container mx-auto px-4 py-8 flex-grow w-full max-w-full">
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
+    <Footer />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script>
+import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
+
+export default {
+  name: 'App',
+  components: {
+    Header,
+    Footer
+  }
+}
+</script>
+
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling at the document level */
+  width: 100%;
+  max-width: 100vw;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden; /* Reinforce no horizontal overflow */
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(208, 243, 208);
+}
+
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 5px;
 }
 </style>

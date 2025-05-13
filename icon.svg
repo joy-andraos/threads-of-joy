@@ -1,0 +1,17 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Transparent background (no background rectangle) -->
+  
+  <!-- Text with curved path -->
+  <defs>
+    <path id="textPath1" d="M10,28 Q32,18 54,30" />
+    <path id="textPath2" d="M16,40 Q32,32 48,42" />
+  </defs>
+  
+  <!-- Text elements following paths with mint green color -->
+  <text font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#4AD9B0">
+    <textPath href="#textPath1">Threads</textPath>
+  </text>
+  <text font-family="Arial, sans-serif" font-weight="bold" font-size="10" fill="#4AD9B0">
+    <textPath href="#textPath2">of Joy</textPath>
+  </text>
+</svg>
