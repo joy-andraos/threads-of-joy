@@ -1,7 +1,7 @@
 <template>
   <div class="about-page">
     <div class="profile-header">
-      <div class="bg-image"></div>
+      <div class="bg-image" :style="{ backgroundImage: `url(${bgImage})` }"></div>
       <div class="profile-content">
         <div class="profile-photo">
           <img :src="profileImage" alt="Profile" />
@@ -28,10 +28,15 @@
 </template>
 
 <script>
+import profileImage from '../assets/about/profile.jpeg'
+import bgImage from '../assets/about/bg.JPEG'
+
 export default {
   name: 'AboutPage',
   data() {
     return {
+      profileImage,
+      bgImage
     }
   }
 }
@@ -61,7 +66,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('about/bg.JPEG');
   background-size: cover;
   background-position: center;
 }
