@@ -10,7 +10,7 @@ export default defineConfig({
       external: ['vue-router', 'autoprefixer', 'postcss', 'tailwindcss'],
       output: {
         manualChunks: {
-          'vendor': ['vue', 'vue-router']
+          'vendor': ['vue', 'lucide-vue-next']
         }
       }
     }
