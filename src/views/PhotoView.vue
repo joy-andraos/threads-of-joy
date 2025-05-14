@@ -783,9 +783,18 @@ export default {
 /* Responsive Adjustments */
 .description-text {
   white-space: nowrap;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 @media (max-width: 768px) {
+  .description-text {
+    white-space: normal;
+    padding: 0 15px;
+  }
+  
   .photo-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
