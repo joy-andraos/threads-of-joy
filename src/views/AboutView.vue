@@ -65,6 +65,11 @@ export default {
       this.imageLoaded = true;
     },
     getOptimizedImageUrl(originalUrl, size) {
+      // For profile and background images, use direct path
+      if (originalUrl.includes('profile.jpeg') || originalUrl.includes('bg.JPEG')) {
+        return originalUrl;
+      }
+      
       const url = new URL(originalUrl, window.location.origin);
       const pathParts = url.pathname.split('/');
       const filename = pathParts.pop();
