@@ -7,7 +7,12 @@ export default defineConfig({
   assetsInclude: ['**/*.JPEG', '**/*.jpeg', '**/*.jpg'],
   build: {
     rollupOptions: {
-      external: ['vue-router', 'autoprefixer']
+      external: ['vue-router', 'autoprefixer', 'postcss', 'tailwindcss'],
+      output: {
+        manualChunks: {
+          'vendor': ['vue', 'vue-router']
+        }
+      }
     }
   }
 })
