@@ -52,8 +52,8 @@
     <div v-if="lightboxOpen" class="lightbox" @click="closeLightbox">
       <div class="lightbox-content" @click.stop>
         <button class="lightbox-close" @click="closeLightbox">×</button>
-        <button class="lightbox-nav prev" @click="prevPhoto" :disabled="currentPhotoIndex === 0">‹</button>
-        <button class="lightbox-nav next" @click="nextPhoto" :disabled="currentPhotoIndex === selectedYearPhotos.length - 1">›</button>
+        <button class="lightbox-nav prev" @click.stop="prevPhoto" :disabled="currentPhotoIndex === 0">‹</button>
+        <button class="lightbox-nav next" @click.stop="nextPhoto" :disabled="currentPhotoIndex === selectedYearPhotos.length - 1">›</button>
         <img 
           :src="currentPhoto.url"
           :alt="currentPhoto.title"
@@ -64,7 +64,11 @@
           @load="onImageLoad(currentPhoto.url)"
           @error="handleImageError"
         />
-        <div class="lightbox-caption">{{ currentPhoto.title }}</div>
+        <div class="lightbox-info">
+          <div class="lightbox-title">{{ currentPhoto.title }}</div>
+          <div class="lightbox-date">{{ currentPhoto.date }}</div>
+          <div class="lightbox-description">{{ currentPhoto.description }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -714,11 +718,29 @@ export default {
   filter: blur(0);
 }
 
-.lightbox-caption {
+.lightbox-info {
   color: white;
   padding: 15px 0;
   text-align: center;
-  font-size: 1.2rem;
+  width: 100%;
+}
+
+.lightbox-title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.lightbox-date {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.lightbox-description {
+  font-size: 1rem;
+  opacity: 0.8;
+  font-style: italic;
 }
 
 .lightbox-close {
@@ -744,6 +766,11 @@ export default {
   padding: 10px 15px;
   cursor: pointer;
   z-index: 1001;
+  transition: background-color 0.3s ease;
+}
+
+.lightbox-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .lightbox-nav.prev {
@@ -757,6 +784,7 @@ export default {
 .lightbox-nav:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  background: rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Adjustments */
@@ -784,6 +812,18 @@ export default {
   
   .lightbox-content {
     max-width: 95%;
+  }
+  
+  .lightbox-title {
+    font-size: 1.2rem;
+  }
+  
+  .lightbox-date {
+    font-size: 1rem;
+  }
+  
+  .lightbox-description {
+    font-size: 0.9rem;
   }
   
   .lightbox-nav {
