@@ -31,7 +31,9 @@
         @click="openLightbox(photo)"
       >
         <img 
-          :src="photo.url" 
+          :src="getOptimizedImageUrl(photo.url, 'thumb')"
+          :srcset="getOptimizedImageSrcset(photo.url)"
+          :sizes="getImageSizes()"
           :alt="photo.title" 
           class="photo-image"
           loading="lazy"
@@ -48,7 +50,12 @@
     <!-- Lightbox (Simple Version) -->
     <div v-if="lightboxOpen" class="lightbox" @click="closeLightbox">
       <div class="lightbox-content" @click.stop>
-        <img :src="currentPhoto.url" :alt="currentPhoto.title">
+        <img 
+          :src="getOptimizedImageUrl(currentPhoto.url, 'large')"
+          :srcset="getOptimizedImageSrcset(currentPhoto.url)"
+          :sizes="'90vw'"
+          :alt="currentPhoto.title"
+        >
         <div class="lightbox-caption">
           <h3>{{ currentPhoto.title }}</h3>
           <p>{{ currentPhoto.description }}</p>
@@ -384,8 +391,44 @@ export default {
     }
   },
   methods: {
+    getOptimizedImageUrl(originalUrl, size) {
+      const url = new URL(originalUrl, window.location.origin);
+      const pathParts = url.pathname.split('/');
+      const filename = pathParts.pop();
+      const nameWithoutExt = filename.split('.')[0];
+      const ext = filename.split('.').pop();
+      
+      // Map size to suffix
+      const sizeMap = {
+        thumb: '-thumb',
+        medium: '-medium',
+        large: '-large'
+      };
+      
+      // Use WebP with JPEG fallback
+      const webpUrl = `/photos-optimized${url.pathname.replace(filename, `${nameWithoutExt}${sizeMap[size]}.webp`)}`;
+      const jpegUrl = `/photos-optimized${url.pathname.replace(filename, `${nameWithoutExt}${sizeMap[size]}.${ext}`)}`;
+      
+      return jpegUrl; // Fallback to JPEG
+    },
+    getOptimizedImageSrcset(originalUrl) {
+      const sizes = ['thumb', 'medium', 'large'];
+      const widthMap = {
+        thumb: '400w',
+        medium: '800w',
+        large: '1600w'
+      };
+      
+      return sizes.map(size => {
+        const webpUrl = this.getOptimizedImageUrl(originalUrl, size).replace(/\.(jpe?g|png)$/, '.webp');
+        const jpegUrl = this.getOptimizedImageUrl(originalUrl, size);
+        return `${webpUrl} ${widthMap[size]}, ${jpegUrl} ${widthMap[size]}`;
+      }).join(', ');
+    },
+    getImageSizes() {
+      return '(max-width: 400px) 400px, (max-width: 800px) 800px, 1600px';
+    },
     changeYear(year) {
-      // Clear loaded images when changing years
       this.loadedImages.clear();
       this.selectedYear = year;
     },
@@ -399,16 +442,15 @@ export default {
     openLightbox(photo) {
       this.currentPhoto = photo;
       this.lightboxOpen = true;
-      document.body.style.overflow = 'hidden'; // Prevent scrolling when lightbox is open
+      document.body.style.overflow = 'hidden';
     },
     closeLightbox() {
       this.lightboxOpen = false;
       this.currentPhoto = null;
-      document.body.style.overflow = ''; // Re-enable scrolling
+      document.body.style.overflow = '';
     }
   },
   beforeUnmount() {
-    // Clear loaded images when component is unmounted
     this.loadedImages.clear();
   }
 }
