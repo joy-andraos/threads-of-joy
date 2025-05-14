@@ -714,11 +714,36 @@ export default {
 
 .lightbox-content {
   position: relative;
-  max-width: 90%;
-  max-height: 90vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: background-color 0.3s ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .lightbox-image {
@@ -740,6 +765,7 @@ export default {
   padding: 15px 0;
   text-align: center;
   width: 100%;
+  max-width: 600px;
 }
 
 .lightbox-title {
@@ -752,18 +778,6 @@ export default {
   font-size: 1rem;
   opacity: 0.8;
   font-style: italic;
-}
-
-.lightbox-close {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 1001;
 }
 
 /* Responsive Adjustments */
@@ -790,7 +804,23 @@ export default {
   }
   
   .lightbox-content {
-    max-width: 95%;
+    padding: 10px;
+  }
+  
+  .lightbox-close {
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .lightbox-image {
+    max-height: 70vh;
+  }
+  
+  .lightbox-info {
+    padding: 10px 0;
   }
   
   .lightbox-title {
@@ -813,6 +843,34 @@ export default {
   
   .quote-text {
     font-size: 1rem;
+  }
+  
+  .lightbox-content {
+    padding: 5px;
+  }
+  
+  .lightbox-close {
+    top: 5px;
+    right: 5px;
+    font-size: 1.2rem;
+    width: 28px;
+    height: 28px;
+  }
+  
+  .lightbox-image {
+    max-height: 65vh;
+  }
+  
+  .lightbox-info {
+    padding: 8px 0;
+  }
+  
+  .lightbox-title {
+    font-size: 1.1rem;
+  }
+  
+  .lightbox-description {
+    font-size: 0.85rem;
   }
 }
 </style>
