@@ -62,6 +62,7 @@
           loading="eager"
           fetchpriority="high"
           @load="onImageLoad(currentPhoto.url)"
+          @error="handleImageError"
         />
         <div class="lightbox-caption">{{ currentPhoto.title }}</div>
       </div>
@@ -399,6 +400,9 @@ export default {
     },
     initialLoadCount() {
       return this.isMobile ? 6 : 12; // Load fewer images initially on mobile
+    },
+    currentPhoto() {
+      return this.selectedYearPhotos[this.currentPhotoIndex] || {};
     }
   },
   mounted() {
@@ -478,13 +482,20 @@ export default {
     onImageLoad(url) {
       this.loadedImages.add(url);
     },
+    handleImageError(event) {
+      console.error('Image failed to load:', event.target.src);
+      // Try to load the original image if the optimized version fails
+      const originalUrl = event.target.src.replace('/photos-optimized', '');
+      event.target.src = originalUrl;
+    },
     openLightbox(photo) {
       this.currentPhotoIndex = this.selectedYearPhotos.findIndex(p => p.url === photo.url);
       this.lightboxOpen = true;
       document.body.style.overflow = 'hidden';
       
-      // Preload adjacent images
-      this.preloadAdjacentImages();
+      // Preload the current image
+      const img = new Image();
+      img.src = photo.url;
     },
     closeLightbox() {
       this.lightboxOpen = false;
@@ -614,7 +625,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   height: 0;
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  padding-bottom: 177.78%; /* 9:16 Aspect Ratio (portrait) */
 }
 
 .photo-image {
@@ -760,7 +771,7 @@ export default {
   }
   
   .photo-item {
-    padding-bottom: 56.25%; /* Keep 16:9 aspect ratio on mobile */
+    padding-bottom: 177.78%; /* Keep 9:16 aspect ratio on mobile */
   }
   
   .photo-title {
