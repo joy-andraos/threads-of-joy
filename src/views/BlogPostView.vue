@@ -81,23 +81,42 @@
   }
   
   .prose h2 {
-    font-size: 1.125rem;
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
     font-weight: 600;
+    color: #000080;  /* Navy blue color */
   }
   
   .prose p {
-    margin-bottom: 0.75rem;
-    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
     line-height: 1.6;
   }
   
   .prose ul {
     list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .prose li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
     padding-left: 1rem;
-    margin-bottom: 0.75rem;
-    font-size: 0.875rem;
   }
   
   .prose blockquote {
@@ -107,5 +126,47 @@
     color: #4b5563;
     margin: 1rem 0;
     font-size: 0.875rem;
+  }
+  
+  .prose p strong:first-child {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #00008B !important;  /* Darker blue color with !important */
+    display: block;
+  }
+  
+  .prose p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .prose strong:not(:first-child) {
+    font-weight: 600;
+    color: inherit !important;  /* Force inherit for non-title strong elements */
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #00008B;
+    display: block;
+  }
+  
+  .prose a {
+    color: #0645AD;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .prose a:visited {
+    color: #6f2da8;
+  }
+  .prose a:hover {
+    color: #0b0080;
+    text-decoration: underline;
   }
   </style>
