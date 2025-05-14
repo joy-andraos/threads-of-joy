@@ -55,7 +55,7 @@ export default {
           technologies: ['Vue.js', 'Tailwind CSS', 'Vite'],
           imageUrl: '/projects/portfolio.png',
           status: 'completed',
-          githubLink: 'https://github.com/username/portfolio'
+          githubLink: 'https://joy-of.dev/projects'
         },
         {
           id: 4,
