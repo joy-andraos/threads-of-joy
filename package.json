@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "sharp": "^0.33.2",
-    "vue": "^3.4.15"
+    "vue": "^3.4.15",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",

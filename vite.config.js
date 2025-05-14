@@ -4,5 +4,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   base: '/',
-  assetsInclude: ['**/*.JPEG', '**/*.jpeg', '**/*.jpg']
+  assetsInclude: ['**/*.JPEG', '**/*.jpeg', '**/*.jpg'],
+  build: {
+    rollupOptions: {
+      external: ['vue-router']
+    }
+  }
 })
