@@ -55,9 +55,7 @@
         <button class="lightbox-nav prev" @click="prevPhoto" :disabled="currentPhotoIndex === 0">‹</button>
         <button class="lightbox-nav next" @click="nextPhoto" :disabled="currentPhotoIndex === selectedYearPhotos.length - 1">›</button>
         <img 
-          :src="getOptimizedImageUrl(currentPhoto.url, 'large')"
-          :srcset="getOptimizedImageSrcset(currentPhoto.url)"
-          :sizes="getImageSizes()"
+          :src="currentPhoto.url"
           :alt="currentPhoto.title"
           class="lightbox-image"
           :class="{ 'loaded': loadedImages.has(currentPhoto.url) }"
@@ -616,7 +614,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   height: 0;
-  padding-bottom: 177.78%; /* 16:9 Aspect Ratio (9:16 portrait) */
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
 }
 
 .photo-image {
@@ -685,28 +683,34 @@ export default {
 .lightbox-content {
   position: relative;
   max-width: 90%;
-  max-height: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.lightbox-content img {
-  display: block;
+.lightbox-image {
   max-width: 100%;
   max-height: 80vh;
   object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  filter: blur(10px);
+}
+
+.lightbox-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 
 .lightbox-caption {
   color: white;
   padding: 15px 0;
   text-align: center;
+  font-size: 1.2rem;
 }
 
-.lightbox-date {
-  font-style: italic;
-  opacity: 0.7;
-}
-
-.close-btn {
+.lightbox-close {
   position: absolute;
   top: -40px;
   right: 0;
@@ -715,6 +719,33 @@ export default {
   color: white;
   font-size: 2rem;
   cursor: pointer;
+  z-index: 1001;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.lightbox-nav.prev {
+  left: 20px;
+}
+
+.lightbox-nav.next {
+  right: 20px;
+}
+
+.lightbox-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* Responsive Adjustments */
@@ -729,7 +760,7 @@ export default {
   }
   
   .photo-item {
-    padding-bottom: 133.33%; /* 3:4 Aspect Ratio for mobile */
+    padding-bottom: 56.25%; /* Keep 16:9 aspect ratio on mobile */
   }
   
   .photo-title {
@@ -744,8 +775,17 @@ export default {
     max-width: 95%;
   }
   
-  .lightbox-content img {
-    max-height: 70vh;
+  .lightbox-nav {
+    font-size: 1.5rem;
+    padding: 8px 12px;
+  }
+  
+  .lightbox-nav.prev {
+    left: 10px;
+  }
+  
+  .lightbox-nav.next {
+    right: 10px;
   }
 }
 
@@ -761,16 +801,5 @@ export default {
   .quote-text {
     font-size: 1rem;
   }
-}
-
-.lightbox-image {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  filter: blur(10px);
-}
-
-.lightbox-image.loaded {
-  opacity: 1;
-  filter: blur(0);
 }
 </style>
