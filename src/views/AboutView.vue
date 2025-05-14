@@ -4,7 +4,12 @@
       <div class="bg-image" :style="{ backgroundImage: `url(${bgImage})` }"></div>
       <div class="profile-content">
         <div class="profile-photo">
-          <img :src="profileImage" alt="Profile" />
+          <img 
+            :src="getOptimizedImageUrl(profileImage, 'medium')"
+            :srcset="getOptimizedImageSrcset(profileImage)"
+            :sizes="getImageSizes()"
+            alt="Profile" 
+          />
         </div>
       </div>
     </div>
@@ -37,6 +42,43 @@ export default {
     return {
       profileImage,
       bgImage
+    }
+  },
+  methods: {
+    getOptimizedImageUrl(originalUrl, size) {
+      const url = new URL(originalUrl, window.location.origin);
+      const pathParts = url.pathname.split('/');
+      const filename = pathParts.pop();
+      const nameWithoutExt = filename.split('.')[0];
+      const ext = filename.split('.').pop();
+      
+      // Map size to suffix
+      const sizeMap = {
+        thumb: '-thumb',
+        medium: '-medium'
+      };
+      
+      // Use WebP with JPEG fallback
+      const webpUrl = `/about-optimized${url.pathname.replace(filename, `${nameWithoutExt}${sizeMap[size]}.webp`)}`;
+      const fallbackUrl = `/about-optimized${url.pathname.replace(filename, `${nameWithoutExt}${sizeMap[size]}.${ext}`)}`;
+      
+      return fallbackUrl; // Fallback to original format
+    },
+    getOptimizedImageSrcset(originalUrl) {
+      const sizes = ['thumb', 'medium'];
+      const widthMap = {
+        thumb: '400w',
+        medium: '800w'
+      };
+      
+      return sizes.map(size => {
+        const webpUrl = this.getOptimizedImageUrl(originalUrl, size).replace(/\.(jpe?g|png)$/, '.webp');
+        const fallbackUrl = this.getOptimizedImageUrl(originalUrl, size);
+        return `${webpUrl} ${widthMap[size]}, ${fallbackUrl} ${widthMap[size]}`;
+      }).join(', ');
+    },
+    getImageSizes() {
+      return '(max-width: 400px) 400px, 800px';
     }
   }
 }
