@@ -481,12 +481,28 @@ export default {
       this.loadedImages.add(url);
     },
     openLightbox(photo) {
-      this.currentPhotoIndex = this.selectedYearPhotos.indexOf(photo);
+      this.currentPhotoIndex = this.selectedYearPhotos.findIndex(p => p.url === photo.url);
       this.lightboxOpen = true;
       document.body.style.overflow = 'hidden';
       
       // Preload adjacent images
       this.preloadAdjacentImages();
+    },
+    closeLightbox() {
+      this.lightboxOpen = false;
+      document.body.style.overflow = '';
+    },
+    prevPhoto() {
+      if (this.currentPhotoIndex > 0) {
+        this.currentPhotoIndex--;
+        this.preloadAdjacentImages();
+      }
+    },
+    nextPhoto() {
+      if (this.currentPhotoIndex < this.selectedYearPhotos.length - 1) {
+        this.currentPhotoIndex++;
+        this.preloadAdjacentImages();
+      }
     },
     preloadAdjacentImages() {
       const nextIndex = this.currentPhotoIndex + 1;
@@ -504,21 +520,7 @@ export default {
     },
     preloadImage(url) {
       const img = new Image();
-      img.src = this.getOptimizedImageUrl(url, 'large');
-    },
-    closeLightbox() {
-      this.lightboxOpen = false;
-      document.body.style.overflow = '';
-    },
-    prevPhoto() {
-      if (this.currentPhotoIndex > 0) {
-        this.currentPhotoIndex--;
-      }
-    },
-    nextPhoto() {
-      if (this.currentPhotoIndex < this.selectedYearPhotos.length - 1) {
-        this.currentPhotoIndex++;
-      }
+      img.src = url;
     }
   }
 }
