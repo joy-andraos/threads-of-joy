@@ -5,10 +5,15 @@
       <div class="profile-content">
         <div class="profile-photo">
           <img 
-            :src="getOptimizedImageUrl(profileImage, 'medium')"
+            :src="getOptimizedImageUrl(profileImage, 'thumb')"
             :srcset="getOptimizedImageSrcset(profileImage)"
             :sizes="getImageSizes()"
-            alt="Profile" 
+            alt="Profile"
+            loading="eager"
+            fetchpriority="high"
+            @load="onImageLoad"
+            class="profile-image"
+            :class="{ 'loaded': imageLoaded }"
           />
         </div>
       </div>
@@ -41,10 +46,24 @@ export default {
   data() {
     return {
       profileImage,
-      bgImage
+      bgImage,
+      imageLoaded: false
     }
   },
+  mounted() {
+    // Preload critical images
+    this.preloadImages([this.profileImage, this.bgImage]);
+  },
   methods: {
+    preloadImages(urls) {
+      urls.forEach(url => {
+        const img = new Image();
+        img.src = this.getOptimizedImageUrl(url, 'thumb');
+      });
+    },
+    onImageLoad(event) {
+      this.imageLoaded = true;
+    },
     getOptimizedImageUrl(originalUrl, size) {
       const url = new URL(originalUrl, window.location.origin);
       const pathParts = url.pathname.split('/');
@@ -230,5 +249,16 @@ export default {
   .highlight {
     padding-left: 20px;
   }
+}
+
+.profile-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  filter: blur(10px);
+}
+
+.profile-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 </style>

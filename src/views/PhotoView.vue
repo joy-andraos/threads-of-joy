@@ -25,8 +25,8 @@
     <!-- Photo Grid -->
     <div class="photo-grid">
       <div 
-        v-for="(photo, index) in filteredPhotos" 
-        :key="photo.id" 
+        v-for="photo in selectedYearPhotos" 
+        :key="photo.url"
         class="photo-item"
         @click="openLightbox(photo)"
       >
@@ -34,12 +34,13 @@
           :src="getOptimizedImageUrl(photo.url, 'thumb')"
           :srcset="getOptimizedImageSrcset(photo.url)"
           :sizes="getImageSizes()"
-          :alt="photo.title" 
+          :alt="photo.title"
           class="photo-image"
+          :class="{ 'loaded': loadedImages.has(photo.url) }"
           loading="lazy"
-          @load="onImageLoad"
-          @error="onImageError"
-        >
+          @load="onImageLoad(photo.url)"
+          ref="photoRefs"
+        />
         <div class="photo-overlay">
           <h3 class="photo-title">{{ photo.title }}</h3>
           <p class="photo-date">{{ photo.date }}</p>
@@ -47,21 +48,24 @@
       </div>
     </div>
 
-    <!-- Lightbox (Simple Version) -->
+    <!-- Lightbox -->
     <div v-if="lightboxOpen" class="lightbox" @click="closeLightbox">
       <div class="lightbox-content" @click.stop>
+        <button class="lightbox-close" @click="closeLightbox">×</button>
+        <button class="lightbox-nav prev" @click="prevPhoto" :disabled="currentPhotoIndex === 0">‹</button>
+        <button class="lightbox-nav next" @click="nextPhoto" :disabled="currentPhotoIndex === selectedYearPhotos.length - 1">›</button>
         <img 
           :src="getOptimizedImageUrl(currentPhoto.url, 'large')"
           :srcset="getOptimizedImageSrcset(currentPhoto.url)"
-          :sizes="'90vw'"
+          :sizes="getImageSizes()"
           :alt="currentPhoto.title"
-        >
-        <div class="lightbox-caption">
-          <h3>{{ currentPhoto.title }}</h3>
-          <p>{{ currentPhoto.description }}</p>
-          <p class="lightbox-date">{{ currentPhoto.date }}</p>
-        </div>
-        <button class="close-btn" @click="closeLightbox">&times;</button>
+          class="lightbox-image"
+          :class="{ 'loaded': loadedImages.has(currentPhoto.url) }"
+          loading="eager"
+          fetchpriority="high"
+          @load="onImageLoad(currentPhoto.url)"
+        />
+        <div class="lightbox-caption">{{ currentPhoto.title }}</div>
       </div>
     </div>
   </div>
@@ -72,11 +76,12 @@ export default {
   name: 'PhotoView',
   data() {
     return {
-      selectedYear: 2025,
+      selectedYear: '2025',
       lightboxOpen: false,
-      currentPhoto: null,
-      years: [2025, 2024, 2023, 2022, 2021],
+      currentPhotoIndex: 0,
       loadedImages: new Set(),
+      observer: null,
+      years: [2025, 2024, 2023, 2022, 2021],
       photos: [
         {
           id: 1,
@@ -388,6 +393,47 @@ export default {
   computed: {
     filteredPhotos() {
       return this.photos.filter(photo => photo.year === this.selectedYear);
+    },
+    selectedYearPhotos() {
+      return this.filteredPhotos;
+    }
+  },
+  mounted() {
+    // Create intersection observer for better lazy loading
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            const photoUrl = img.getAttribute('data-url');
+            if (photoUrl) {
+              img.src = this.getOptimizedImageUrl(photoUrl, 'thumb');
+              img.srcset = this.getOptimizedImageSrcset(photoUrl);
+              this.observer.unobserve(img);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '50px 0px',
+        threshold: 0.1
+      }
+    );
+
+    // Observe all photo elements
+    this.$nextTick(() => {
+      if (this.$refs.photoRefs) {
+        this.$refs.photoRefs.forEach(img => {
+          img.setAttribute('data-url', img.getAttribute('src'));
+          img.src = ''; // Clear src to prevent immediate loading
+          this.observer.observe(img);
+        });
+      }
+    });
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
     }
   },
   methods: {
@@ -429,29 +475,43 @@ export default {
       return '(max-width: 400px) 400px, (max-width: 800px) 800px, 1600px';
     },
     changeYear(year) {
-      this.loadedImages.clear();
       this.selectedYear = year;
+      this.loadedImages.clear();
+      this.lightboxOpen = false;
+      
+      // Re-observe images after year change
+      this.$nextTick(() => {
+        if (this.$refs.photoRefs) {
+          this.$refs.photoRefs.forEach(img => {
+            img.setAttribute('data-url', img.getAttribute('src'));
+            img.src = ''; // Clear src to prevent immediate loading
+            this.observer.observe(img);
+          });
+        }
+      });
     },
-    onImageLoad(event) {
-      const img = event.target;
-      this.loadedImages.add(img.src);
-    },
-    onImageError(event) {
-      console.error('Failed to load image:', event.target.src);
+    onImageLoad(url) {
+      this.loadedImages.add(url);
     },
     openLightbox(photo) {
-      this.currentPhoto = photo;
+      this.currentPhotoIndex = this.selectedYearPhotos.indexOf(photo);
       this.lightboxOpen = true;
       document.body.style.overflow = 'hidden';
     },
     closeLightbox() {
       this.lightboxOpen = false;
-      this.currentPhoto = null;
       document.body.style.overflow = '';
+    },
+    prevPhoto() {
+      if (this.currentPhotoIndex > 0) {
+        this.currentPhotoIndex--;
+      }
+    },
+    nextPhoto() {
+      if (this.currentPhotoIndex < this.selectedYearPhotos.length - 1) {
+        this.currentPhotoIndex++;
+      }
     }
-  },
-  beforeUnmount() {
-    this.loadedImages.clear();
   }
 }
 </script>
@@ -557,10 +617,18 @@ export default {
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  filter: blur(10px);
 }
 
 .photo-item:hover .photo-image {
   transform: scale(1.05);
+}
+
+.photo-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 
 .photo-overlay {
@@ -674,5 +742,16 @@ export default {
   .quote-text {
     font-size: 1rem;
   }
+}
+
+.lightbox-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  filter: blur(10px);
+}
+
+.lightbox-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 </style>

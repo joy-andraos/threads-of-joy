@@ -6,8 +6,11 @@
         :srcset="getOptimizedImageSrcset(post.imageUrl)"
         :sizes="getImageSizes()"
         :alt="post.title" 
-        class="w-full h-48 object-cover object-center rounded-lg shadow-md"
+        class="w-full h-48 object-cover object-center rounded-lg shadow-md blog-image"
+        :class="{ 'loaded': imageLoaded }"
         loading="lazy"
+        @load="onImageLoad"
+        ref="imageRef"
       />
       
       <div class="pt-3 px-1">
@@ -25,13 +28,50 @@
 <script>
 export default {
   name: 'BlogCard',
+  data() {
+    return {
+      imageLoaded: false,
+      observer: null
+    }
+  },
   props: {
     post: {
       type: Object,
       required: true
     }
   },
+  mounted() {
+    // Create intersection observer for better lazy loading
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = this.getOptimizedImageUrl(this.post.imageUrl, 'thumb');
+            img.srcset = this.getOptimizedImageSrcset(this.post.imageUrl);
+            this.observer.unobserve(img);
+          }
+        });
+      },
+      {
+        rootMargin: '50px 0px',
+        threshold: 0.1
+      }
+    );
+
+    if (this.$refs.imageRef) {
+      this.observer.observe(this.$refs.imageRef);
+    }
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
   methods: {
+    onImageLoad() {
+      this.imageLoaded = true;
+    },
     getOptimizedImageUrl(originalUrl, size) {
       const url = new URL(originalUrl, window.location.origin);
       const pathParts = url.pathname.split('/');
@@ -135,5 +175,16 @@ export default {
 
 .blog-card:hover .title-underline {
   transform: scaleX(1);
+}
+
+.blog-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  filter: blur(10px);
+}
+
+.blog-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 </style>

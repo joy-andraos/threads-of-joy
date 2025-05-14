@@ -14,8 +14,11 @@
           :srcset="getOptimizedImageSrcset(project.imageUrl)"
           :sizes="getImageSizes()"
           :alt="project.title" 
-          class="w-full h-40 object-cover rounded-md border border-gray-200 shadow-sm"
+          class="w-full h-40 object-cover rounded-md border border-gray-200 shadow-sm project-image"
+          :class="{ 'loaded': imageLoaded }"
           loading="lazy"
+          @load="onImageLoad"
+          ref="imageRef"
         />
       </div>
       
@@ -72,6 +75,12 @@ import { Github, Star, GitFork } from 'lucide-vue-next'
 
 export default {
   name: 'ProjectCard',
+  data() {
+    return {
+      imageLoaded: false,
+      observer: null
+    }
+  },
   components: {
     Github,
     Star,
@@ -89,7 +98,38 @@ export default {
       }
     }
   },
+  mounted() {
+    // Create intersection observer for better lazy loading
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = this.getOptimizedImageUrl(this.project.imageUrl, 'thumb');
+            img.srcset = this.getOptimizedImageSrcset(this.project.imageUrl);
+            this.observer.unobserve(img);
+          }
+        });
+      },
+      {
+        rootMargin: '50px 0px',
+        threshold: 0.1
+      }
+    );
+
+    if (this.$refs.imageRef) {
+      this.observer.observe(this.$refs.imageRef);
+    }
+  },
+  beforeUnmount() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  },
   methods: {
+    onImageLoad() {
+      this.imageLoaded = true;
+    },
     getOptimizedImageUrl(originalUrl, size) {
       const url = new URL(originalUrl, window.location.origin);
       const pathParts = url.pathname.split('/');
@@ -147,5 +187,16 @@ export default {
   font-size: 15px;
   line-height: 1;
   text-align: center;
+}
+
+.project-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  filter: blur(10px);
+}
+
+.project-image.loaded {
+  opacity: 1;
+  filter: blur(0);
 }
 </style>
