@@ -7,7 +7,7 @@ export default defineConfig({
   assetsInclude: ['**/*.JPEG', '**/*.jpeg', '**/*.jpg'],
   build: {
     rollupOptions: {
-      external: ['vue-router', 'autoprefixer', 'postcss', 'tailwindcss'],
+      external: ['autoprefixer', 'postcss', 'tailwindcss'],
       output: {
         manualChunks: {
           'vendor': ['vue', 'lucide-vue-next']
