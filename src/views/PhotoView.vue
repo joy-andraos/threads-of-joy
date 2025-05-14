@@ -81,6 +81,7 @@ export default {
       currentPhotoIndex: 0,
       loadedImages: new Set(),
       observer: null,
+      isMobile: false,
       years: [2025, 2024, 2023, 2022, 2021],
       photos: [
         {
@@ -396,9 +397,16 @@ export default {
     },
     selectedYearPhotos() {
       return this.filteredPhotos;
+    },
+    initialLoadCount() {
+      return this.isMobile ? 6 : 12; // Load fewer images initially on mobile
     }
   },
   mounted() {
+    // Check if device is mobile
+    this.checkMobile();
+    window.addEventListener('resize', this.checkMobile);
+
     // Create intersection observer for better lazy loading
     this.observer = new IntersectionObserver(
       (entries) => {
@@ -407,7 +415,7 @@ export default {
             const img = entry.target;
             const photoUrl = img.getAttribute('data-url');
             if (photoUrl) {
-              img.src = this.getOptimizedImageUrl(photoUrl, 'thumb');
+              img.src = this.getOptimizedImageUrl(photoUrl, this.isMobile ? 'thumb' : 'medium');
               img.srcset = this.getOptimizedImageSrcset(photoUrl);
               this.observer.unobserve(img);
             }
@@ -415,15 +423,16 @@ export default {
         });
       },
       {
-        rootMargin: '50px 0px',
+        rootMargin: this.isMobile ? '100px 0px' : '50px 0px',
         threshold: 0.1
       }
     );
 
-    // Observe all photo elements
+    // Observe initial set of photos
     this.$nextTick(() => {
       if (this.$refs.photoRefs) {
-        this.$refs.photoRefs.forEach(img => {
+        const initialPhotos = this.$refs.photoRefs.slice(0, this.initialLoadCount);
+        initialPhotos.forEach(img => {
           img.setAttribute('data-url', img.getAttribute('src'));
           img.src = ''; // Clear src to prevent immediate loading
           this.observer.observe(img);
@@ -435,8 +444,12 @@ export default {
     if (this.observer) {
       this.observer.disconnect();
     }
+    window.removeEventListener('resize', this.checkMobile);
   },
   methods: {
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 768;
+    },
     getOptimizedImageUrl(originalUrl, size) {
       const url = new URL(originalUrl, window.location.origin);
       const pathParts = url.pathname.split('/');
@@ -444,11 +457,11 @@ export default {
       const nameWithoutExt = filename.split('.')[0];
       const ext = filename.split('.').pop();
       
-      // Map size to suffix
+      // Map size to suffix with mobile optimization
       const sizeMap = {
-        thumb: '-thumb',
-        medium: '-medium',
-        large: '-large'
+        thumb: this.isMobile ? '-thumb-mobile' : '-thumb',
+        medium: this.isMobile ? '-medium-mobile' : '-medium',
+        large: this.isMobile ? '-large-mobile' : '-large'
       };
       
       // Use WebP with JPEG fallback
@@ -459,7 +472,11 @@ export default {
     },
     getOptimizedImageSrcset(originalUrl) {
       const sizes = ['thumb', 'medium', 'large'];
-      const widthMap = {
+      const widthMap = this.isMobile ? {
+        thumb: '200w',
+        medium: '400w',
+        large: '800w'
+      } : {
         thumb: '400w',
         medium: '800w',
         large: '1600w'
@@ -472,7 +489,9 @@ export default {
       }).join(', ');
     },
     getImageSizes() {
-      return '(max-width: 400px) 400px, (max-width: 800px) 800px, 1600px';
+      return this.isMobile 
+        ? '(max-width: 200px) 200px, (max-width: 400px) 400px, 800px'
+        : '(max-width: 400px) 400px, (max-width: 800px) 800px, 1600px';
     },
     changeYear(year) {
       this.selectedYear = year;
@@ -482,7 +501,8 @@ export default {
       // Re-observe images after year change
       this.$nextTick(() => {
         if (this.$refs.photoRefs) {
-          this.$refs.photoRefs.forEach(img => {
+          const initialPhotos = this.$refs.photoRefs.slice(0, this.initialLoadCount);
+          initialPhotos.forEach(img => {
             img.setAttribute('data-url', img.getAttribute('src'));
             img.src = ''; // Clear src to prevent immediate loading
             this.observer.observe(img);
@@ -497,6 +517,27 @@ export default {
       this.currentPhotoIndex = this.selectedYearPhotos.indexOf(photo);
       this.lightboxOpen = true;
       document.body.style.overflow = 'hidden';
+      
+      // Preload adjacent images
+      this.preloadAdjacentImages();
+    },
+    preloadAdjacentImages() {
+      const nextIndex = this.currentPhotoIndex + 1;
+      const prevIndex = this.currentPhotoIndex - 1;
+      
+      if (nextIndex < this.selectedYearPhotos.length) {
+        const nextPhoto = this.selectedYearPhotos[nextIndex];
+        this.preloadImage(nextPhoto.url);
+      }
+      
+      if (prevIndex >= 0) {
+        const prevPhoto = this.selectedYearPhotos[prevIndex];
+        this.preloadImage(prevPhoto.url);
+      }
+    },
+    preloadImage(url) {
+      const img = new Image();
+      img.src = this.getOptimizedImageUrl(url, 'large');
     },
     closeLightbox() {
       this.lightboxOpen = false;
@@ -714,19 +755,28 @@ export default {
 
 @media (max-width: 768px) {
   .photo-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
   }
   
-  .quote-title {
-    font-size: 2rem;
+  .photo-item {
+    padding-bottom: 133.33%; /* 3:4 Aspect Ratio for mobile */
   }
   
-  .quote-text {
-    font-size: 1.2rem;
+  .photo-title {
+    font-size: 0.9rem;
   }
-
-  .description-text {
-    white-space: normal;
+  
+  .photo-date {
+    font-size: 0.7rem;
+  }
+  
+  .lightbox-content {
+    max-width: 95%;
+  }
+  
+  .lightbox-content img {
+    max-height: 70vh;
   }
 }
 

@@ -9,21 +9,38 @@ const __dirname = path.dirname(__filename);
 // Configuration for different sections
 const configs = {
   photos: {
-    thumbnail: { width: 400, quality: 80, suffix: '-thumb' },
-    medium: { width: 800, quality: 80, suffix: '-medium' },
-    large: { width: 1600, quality: 80, suffix: '-large' }
+    sizes: {
+      'thumb-mobile': { width: 200, quality: 80 },
+      'medium-mobile': { width: 400, quality: 80 },
+      'large-mobile': { width: 800, quality: 80 },
+      'thumb': { width: 400, quality: 80 },
+      'medium': { width: 800, quality: 80 },
+      'large': { width: 1600, quality: 80 }
+    }
   },
   blogs: {
-    thumbnail: { width: 400, quality: 80, suffix: '-thumb' },
-    medium: { width: 800, quality: 80, suffix: '-medium' }
+    sizes: {
+      'thumb-mobile': { width: 200, quality: 80 },
+      'medium-mobile': { width: 400, quality: 80 },
+      'thumb': { width: 400, quality: 80 },
+      'medium': { width: 800, quality: 80 }
+    }
   },
   projects: {
-    thumbnail: { width: 400, quality: 80, suffix: '-thumb' },
-    medium: { width: 800, quality: 80, suffix: '-medium' }
+    sizes: {
+      'thumb-mobile': { width: 200, quality: 80 },
+      'medium-mobile': { width: 400, quality: 80 },
+      'thumb': { width: 400, quality: 80 },
+      'medium': { width: 800, quality: 80 }
+    }
   },
   about: {
-    thumbnail: { width: 400, quality: 80, suffix: '-thumb' },
-    medium: { width: 800, quality: 80, suffix: '-medium' }
+    sizes: {
+      'thumb-mobile': { width: 200, quality: 80 },
+      'medium-mobile': { width: 400, quality: 80 },
+      'thumb': { width: 400, quality: 80 },
+      'medium': { width: 800, quality: 80 }
+    }
   }
 };
 
