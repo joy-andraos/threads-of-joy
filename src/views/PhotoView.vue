@@ -75,8 +75,9 @@
 export default {
   name: 'PhotoView',
   data() {
+    const mostRecentYear = Math.max(...[2025, 2024, 2023, 2022, 2021]);
     return {
-      selectedYear: '2025',
+      selectedYear: mostRecentYear,
       lightboxOpen: false,
       currentPhotoIndex: 0,
       loadedImages: new Set(),
@@ -451,47 +452,13 @@ export default {
       this.isMobile = window.innerWidth <= 768;
     },
     getOptimizedImageUrl(originalUrl, size) {
-      const url = new URL(originalUrl, window.location.origin);
-      const pathParts = url.pathname.split('/');
-      const filename = pathParts.pop();
-      const nameWithoutExt = filename.split('.')[0];
-      const ext = filename.split('.').pop();
-      
-      // Map size to suffix with mobile optimization
-      const sizeMap = {
-        thumb: this.isMobile ? '-thumb-mobile' : '-thumb',
-        medium: this.isMobile ? '-medium-mobile' : '-medium',
-        large: this.isMobile ? '-large-mobile' : '-large'
-      };
-      
-      // Use WebP with JPEG fallback
-      const webpUrl = `/photos-optimized${url.pathname.replace(filename, `${nameWithoutExt}${sizeMap[size]}.webp`)}`;
-      const jpegUrl = `/photos-optimized${url.pathname.replace(filename, `${nameWithoutExt}${sizeMap[size]}.${ext}`)}`;
-      
-      return jpegUrl; // Fallback to JPEG
+      return originalUrl;
     },
     getOptimizedImageSrcset(originalUrl) {
-      const sizes = ['thumb', 'medium', 'large'];
-      const widthMap = this.isMobile ? {
-        thumb: '200w',
-        medium: '400w',
-        large: '800w'
-      } : {
-        thumb: '400w',
-        medium: '800w',
-        large: '1600w'
-      };
-      
-      return sizes.map(size => {
-        const webpUrl = this.getOptimizedImageUrl(originalUrl, size).replace(/\.(jpe?g|png)$/, '.webp');
-        const jpegUrl = this.getOptimizedImageUrl(originalUrl, size);
-        return `${webpUrl} ${widthMap[size]}, ${jpegUrl} ${widthMap[size]}`;
-      }).join(', ');
+      return originalUrl;
     },
     getImageSizes() {
-      return this.isMobile 
-        ? '(max-width: 200px) 200px, (max-width: 400px) 400px, 800px'
-        : '(max-width: 400px) 400px, (max-width: 800px) 800px, 1600px';
+      return '100vw';
     },
     changeYear(year) {
       this.selectedYear = year;
