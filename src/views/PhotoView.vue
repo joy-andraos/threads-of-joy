@@ -14,7 +14,7 @@
       <button 
         v-for="year in years" 
         :key="year" 
-        @click="selectedYear = year"
+        @click="changeYear(year)"
         :class="{ active: selectedYear === year }"
         class="year-btn"
       >
@@ -26,11 +26,18 @@
     <div class="photo-grid">
       <div 
         v-for="(photo, index) in filteredPhotos" 
-        :key="index" 
+        :key="photo.id" 
         class="photo-item"
         @click="openLightbox(photo)"
       >
-        <img :src="photo.url" :alt="photo.title" class="photo-image">
+        <img 
+          :src="photo.url" 
+          :alt="photo.title" 
+          class="photo-image"
+          loading="lazy"
+          @load="onImageLoad"
+          @error="onImageError"
+        >
         <div class="photo-overlay">
           <h3 class="photo-title">{{ photo.title }}</h3>
           <p class="photo-date">{{ photo.date }}</p>
@@ -62,6 +69,7 @@ export default {
       lightboxOpen: false,
       currentPhoto: null,
       years: [2025, 2024, 2023, 2022, 2021],
+      loadedImages: new Set(),
       photos: [
         {
           id: 1,
@@ -376,6 +384,18 @@ export default {
     }
   },
   methods: {
+    changeYear(year) {
+      // Clear loaded images when changing years
+      this.loadedImages.clear();
+      this.selectedYear = year;
+    },
+    onImageLoad(event) {
+      const img = event.target;
+      this.loadedImages.add(img.src);
+    },
+    onImageError(event) {
+      console.error('Failed to load image:', event.target.src);
+    },
     openLightbox(photo) {
       this.currentPhoto = photo;
       this.lightboxOpen = true;
@@ -386,6 +406,10 @@ export default {
       this.currentPhoto = null;
       document.body.style.overflow = ''; // Re-enable scrolling
     }
+  },
+  beforeUnmount() {
+    // Clear loaded images when component is unmounted
+    this.loadedImages.clear();
   }
 }
 </script>
