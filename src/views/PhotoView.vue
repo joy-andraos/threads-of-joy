@@ -52,8 +52,6 @@
     <div v-if="lightboxOpen" class="lightbox" @click="closeLightbox">
       <div class="lightbox-content" @click.stop>
         <button class="lightbox-close" @click="closeLightbox">×</button>
-        <button class="lightbox-nav prev" @click.stop="prevPhoto" :disabled="currentPhotoIndex === 0">‹</button>
-        <button class="lightbox-nav next" @click.stop="nextPhoto" :disabled="currentPhotoIndex === selectedYearPhotos.length - 1">›</button>
         <img 
           :src="currentPhoto.url"
           :alt="currentPhoto.title"
@@ -66,7 +64,6 @@
         />
         <div class="lightbox-info">
           <div class="lightbox-title">{{ currentPhoto.title }}</div>
-          <div class="lightbox-date">{{ currentPhoto.date }}</div>
           <div class="lightbox-description">{{ currentPhoto.description }}</div>
         </div>
       </div>
@@ -446,12 +443,17 @@ export default {
         });
       }
     });
+
+    // Add keyboard event listener
+    window.addEventListener('keydown', this.handleKeyPress);
   },
   beforeUnmount() {
     if (this.observer) {
       this.observer.disconnect();
     }
     window.removeEventListener('resize', this.checkMobile);
+    // Remove keyboard event listener
+    window.removeEventListener('keydown', this.handleKeyPress);
   },
   methods: {
     checkMobile() {
@@ -534,6 +536,21 @@ export default {
     preloadImage(url) {
       const img = new Image();
       img.src = url;
+    },
+    handleKeyPress(event) {
+      if (!this.lightboxOpen) return;
+      
+      switch(event.key) {
+        case 'ArrowLeft':
+          this.prevPhoto();
+          break;
+        case 'ArrowRight':
+          this.nextPhoto();
+          break;
+        case 'Escape':
+          this.closeLightbox();
+          break;
+      }
     }
   }
 }
@@ -731,12 +748,6 @@ export default {
   margin-bottom: 8px;
 }
 
-.lightbox-date {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 4px;
-}
-
 .lightbox-description {
   font-size: 1rem;
   opacity: 0.8;
@@ -753,38 +764,6 @@ export default {
   font-size: 2rem;
   cursor: pointer;
   z-index: 1001;
-}
-
-.lightbox-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
-  color: white;
-  font-size: 2rem;
-  padding: 10px 15px;
-  cursor: pointer;
-  z-index: 1001;
-  transition: background-color 0.3s ease;
-}
-
-.lightbox-nav:hover {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-.lightbox-nav.prev {
-  left: 20px;
-}
-
-.lightbox-nav.next {
-  right: 20px;
-}
-
-.lightbox-nav:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background: rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Adjustments */
@@ -818,25 +797,8 @@ export default {
     font-size: 1.2rem;
   }
   
-  .lightbox-date {
-    font-size: 1rem;
-  }
-  
   .lightbox-description {
     font-size: 0.9rem;
-  }
-  
-  .lightbox-nav {
-    font-size: 1.5rem;
-    padding: 8px 12px;
-  }
-  
-  .lightbox-nav.prev {
-    left: 10px;
-  }
-  
-  .lightbox-nav.next {
-    right: 10px;
   }
 }
 
