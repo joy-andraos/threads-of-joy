@@ -21,14 +21,14 @@ export default {
 
       <p>It's not just motivational quotes and picture-perfect Instagram stories.</p>
 
-      <p>It's actually quite the opposite because in order to level up to where you want to be, you have to outgrow where you are and learn to act and think like the person you aspire to be.</p>
+      <p>It's actually the opposite. To level up, you must outgrow your current self and start thinking and acting like the person you aspire to be.</p>
 
       <p><strong>Discomfort = Growth</strong></p>
 
-      <p>This means showing up consistently, even when progress feels slow because moving 1% forward is still a step ahead, and you owe it to yourself to become all that you're capable of being.</p>
+      <p>This means showing up consistently even when progress feels slow, because every small step forward is still a step closer to your goals. You owe it to yourself to keep moving and become everything you're meant to be.</p>
 
       <p>It also means being honest with yourself about what you still need to work on, and that takes courage. But it's in facing these truths that transformation happens.</p>
 
-      <p>So, embrace that discomfort because what awaits you at the end of the tunnel is everything you've dreamed of becoming. And while you're on the way to it, don't forget to pause and reflect on how far you've come, and be proud of yourself.</p>
+      <p>So embrace the discomfort, because at the end of the tunnel lies everything you've ever dreamed of becoming. And while you're on the way to it, don't forget to pause and celebrate how far you've come.</p>
     `
 }; 

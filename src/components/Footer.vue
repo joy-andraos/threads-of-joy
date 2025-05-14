@@ -1,7 +1,7 @@
 <template>
   <footer class="bg-gradient-to-r from-teal-100 to-green-200 py-4 px-4 grid grid-cols-1 md:grid-cols-3 items-center">
     <div class="hidden md:block text-sm text-gray-700 font-medium text-left">
-      Last update: May 12, 2025
+      Last update: May 14, 2025
     </div>
     <div class="flex justify-center items-center space-x-8">
       <!-- LinkedIn Logo -->
@@ -68,7 +68,7 @@
       </a>
     </div>
     <div class="block md:hidden mt-4 text-sm text-gray-700 font-medium text-center col-span-1">
-      Last update: May 30, 2024
+      Last update: May 14, 2025
     </div>
     <div class="hidden md:block"></div>
   </footer>
