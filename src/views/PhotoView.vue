@@ -389,6 +389,14 @@ export default {
           description: '7:35 PM',
           year: 2025
         },
+        {
+          id: 38,
+          url: '/photos/2025/afqa.jpeg',
+          title: 'Afqa Waterfall',
+          date: 'May 25, 2025',
+          description: '1:43 PM',
+          year: 2025
+        },
       ]
     }
   },
