@@ -20,7 +20,6 @@
 import BlogCard from '../components/BlogCard.vue';
 
 // Import all blog posts
-import expectationsPost from '../blog-content/expectations-in-your-20s.js';
 import findingPathPost from '../blog-content/attention-need.js';
 import lessonsFromFailurePost from '../blog-content/discomfort-is-growth.js';
 
@@ -33,7 +32,6 @@ export default {
     return {
       posts: [
         findingPathPost,
-        expectationsPost,
         lessonsFromFailurePost
       ]
     };
