@@ -30,7 +30,7 @@
           <span class="cta"> Threads of Joy</span> represents the intersection of logic and creativity where I find my own joy: the threads of code that power computers and the creative threads that tell stories and capture moments. 
         </p>
         <p>
-          On this site, you'll find my coding projects, blog posts, and photographs; just click the icons in the header to explore. Feel free to look around and let's connect! If you're interested in getting my CV, you can reach out to me via LinkedIn or email (links below).
+          On this site, you'll find my coding projects, blog posts, and photographs; just click on the icons in the header to explore. Feel free to look around and let's connect! If you're interested in getting my CV, you can reach out to me via LinkedIn or email (links below).
         </p>
       </div>
     </div>
