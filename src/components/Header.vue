@@ -67,7 +67,7 @@ export default {
       navLinks: [
         { name: 'About', path: '/', icon: Home },
         { name: 'Projects', path: '/projects', icon: Laptop },
-        { name: 'Blog', path: '/blog', icon: PenTool },
+        // { name: 'Blog', path: '/blog', icon: PenTool }, // Blog link hidden for now
         { name: 'Photos', path: '/photos', icon: Camera },
       ]
     }
