@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Nunito', 'sans-serif'],
+      },
       colors: {
         'teal-custom': {
           50: '#e6f3f3',

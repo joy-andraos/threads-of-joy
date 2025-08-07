@@ -10,10 +10,13 @@
     "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
+    "framer-motion": "^12.23.12",
     "lucide-vue-next": "^0.510.0",
     "sharp": "^0.33.2",
+    "swiper": "^11.2.10",
     "vue": "^3.4.15",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue3-carousel": "^0.16.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",

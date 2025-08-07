@@ -1,20 +1,20 @@
 <template>
   <div>
     <article 
-      class="bg-white rounded-lg shadow hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col h-full overflow-hidden relative group hover:-translate-y-1">     
-      <div class="p-4">
-        <h3 class="text-base font-bold text-gray-800 mb-2 group-hover:text-emerald-600 transition-colors duration-300">{{ project.title }}</h3>
-        <p class="text-sm text-gray-600 mb-3">{{ project.description }}</p>
+      class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col h-full overflow-hidden relative group hover:-translate-y-2 border border-gray-100">     
+      <div class="p-6">
+        <h3 class="text-lg font-bold text-gray-800 mb-3 group-hover:text-emerald-600 transition-colors duration-300 leading-tight">{{ project.title }}</h3>
+        <p class="text-sm text-gray-600 mb-4 leading-relaxed">{{ project.description }}</p>
       </div>
       
       <!-- Image with overlay on hover - reduced height -->
-      <div class="relative overflow-hidden px-5">
+      <div class="relative overflow-hidden px-6">
         <img 
           :src="getOptimizedImageUrl(project.imageUrl, 'thumb')"
           :srcset="getOptimizedImageSrcset(project.imageUrl)"
           :sizes="getImageSizes()"
           :alt="project.title" 
-          class="w-full h-40 object-cover rounded-md border border-gray-200 shadow-sm project-image"
+          class="w-full h-48 object-cover rounded-lg border border-gray-200 shadow-sm project-image group-hover:scale-105 transition-transform duration-300"
           :class="{ 'loaded': imageLoaded }"
           loading="lazy"
           @load="onImageLoad"
@@ -22,12 +22,12 @@
         />
       </div>
       
-      <div class="p-5 pt-3 flex flex-col flex-grow">
-        <div class="flex flex-wrap gap-1.5 mb-4">
+      <div class="p-6 pt-4 flex flex-col flex-grow">
+        <div class="flex flex-wrap gap-2 mb-4">
           <span 
             v-for="tech in project.technologies" 
             :key="tech"
-            class="px-2 py-1 bg-gray-100 text-gray-800 text-xs font-medium rounded-full group-hover:bg-emerald-50 group-hover:text-emerald-700 transition-colors duration-300"
+            class="px-3 py-1.5 bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-700 text-xs font-semibold rounded-full group-hover:from-emerald-100 group-hover:to-teal-100 group-hover:text-emerald-800 transition-all duration-300 border border-emerald-200"
           >
             {{ tech }}
           </span>
@@ -36,7 +36,7 @@
         <!-- Date on left, icons on right -->
         <div class="mt-auto flex justify-between items-center">
           <!-- Date on the left -->
-          <span v-if="project.date" class="text-gray-500 text-xs">
+          <span v-if="project.date" class="text-gray-500 text-xs font-medium">
             {{ project.date }}
           </span>
           <!-- Empty span to maintain spacing when no date is present -->
@@ -45,10 +45,10 @@
           <!-- Icons on right -->
           <div class="flex space-x-3">
             <span 
-              class="status-bubble font-medium rounded-full flex items-center justify-center"
+              class="status-bubble font-semibold rounded-full flex items-center justify-center transition-all duration-300"
               :class="{
-                'bg-yellow-100 text-yellow-800': project.status === 'in progress',
-                'bg-green-100 text-green-800': project.status === 'completed'
+                'bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 border border-yellow-200': project.status === 'in progress',
+                'bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border border-green-200': project.status === 'completed'
               }"
             >
               {{ project.status }}
@@ -57,10 +57,10 @@
               v-if="project.githubLink"
               :href="project.githubLink" 
               target="_blank"
-              class="p-2 bg-gray-100 text-black rounded-full hover:bg-gray-300 transition-colors flex items-center justify-center h-8"
+              class="p-2 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 rounded-full hover:from-gray-200 hover:to-gray-300 hover:text-gray-900 transition-all duration-300 flex items-center justify-center h-8 border border-gray-300"
               title="GitHub Repository"
             >
-              <Github class="w-5 h-5" />
+              <Github class="w-4 h-4" />
             </a>
             <span v-else class="p-2" style="visibility: hidden; width: 40px; display: inline-block; height: 32px;"></span>
           </div>
@@ -184,7 +184,7 @@ export default {
   height: 32px;
   padding: 0;
   border-radius: 9999px;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1;
   text-align: center;
 }

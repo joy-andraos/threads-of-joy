@@ -1,10 +1,10 @@
 <template>
   <div class="photo-view-container">
     <!-- Quote Section -->
-    <div style="text-align: center; width: 100%; margin-bottom: 40px;">
-      <h1 style="text-align: center; width: 100%; font-size: 2rem; font-weight: 500; margin-bottom: 5px;">pho•tog•ra•phy</h1>
-      <p style="text-align: center; width: 100%; font-size: 1rem; font-style: italic; color: #555; margin-bottom: 15px;">noun</p>
-      <p style="text-align: center; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.2rem; line-height: 1.6; color: #333;" class="description-text">
+    <div class="quote-section">
+      <h1 class="quote-title">pho•tog•ra•phy</h1>
+      <p class="quote-subtitle">noun</p>
+      <p class="quote-text">
         the art of freezing a moment in time, while time itself moves on, and the moment disappears
       </p>
     </div>
@@ -375,14 +375,6 @@ export default {
         },
         {
           id: 36,
-          url: '/photos/2025/arz.jpeg',
-          title: 'Cedars of God, again',
-          date: 'Mar 16, 2025',
-          description: '4:44 PM',
-          year: 2025
-        },
-        {
-          id: 37,
           url: '/photos/2025/boat.JPEG',
           title: 'Cotton Candy Sky',
           date: 'May 10, 2025',
@@ -390,13 +382,29 @@ export default {
           year: 2025
         },
         {
-          id: 38,
-          url: '/photos/2025/afqa.jpeg',
-          title: 'Afqa Waterfall',
-          date: 'May 25, 2025',
-          description: '1:43 PM',
+          id: 37,
+          url: '/photos/2025/jetee.jpeg',
+          title: 'La Jetée, again',
+          date: 'July 12, 2025',
+          description: '8:06 PM',
           year: 2025
         },
+        {
+          id: 38,
+          url: '/photos/2025/stars.jpeg',
+          title: 'Milky Way',
+          date: 'August 2, 2025',
+          description: '10:36 PM',
+          year: 2025
+        },
+        {
+          id: 39,
+          url: '/photos/2025/ehden.jpeg',
+          title: 'Above the clouds',
+          date: 'August 6, 2025',
+          description: '7:53 PM',
+          year: 2025
+        }
       ]
     }
   },
@@ -566,95 +574,112 @@ export default {
 
 <style scoped>
 .photo-view-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
-}
-
-/* Container for centering */
-.container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
+  padding: 0 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: auto;
+  margin-top: -10px;
 }
 
 /* Quote Section Styling */
 .quote-section {
   text-align: center;
   margin-bottom: 40px;
-  padding: 20px;
-  max-width: 800px;
+  padding: 0 20px 20px 20px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
 
 .quote-title {
-  font-size: 2.5rem;
-  margin-bottom: 5px;
+  font-size: 2rem;
+  margin-bottom: 4px;
   font-weight: 500;
   text-align: center;
+  color: #1a202c;
+  letter-spacing: -0.02em;
 }
 
 .quote-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
+  font-size: 1rem;
+  margin-bottom: 12px;
   font-style: italic;
-  color: #555;
+  color: #64748b;
   text-align: center;
+  font-weight: 400;
 }
 
 .quote-text {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   line-height: 1.6;
-  color: #333;
+  color: #475569;
   text-align: center;
+  font-weight: 400;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* Year Selector Styling */
 .year-selector {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   flex-wrap: wrap;
   width: 100%;
+  gap: 8px;
 }
 
 .year-btn {
-  padding: 8px 16px;
-  margin: 0 8px 8px 0;
-  background: none;
-  border: 1px solid #ccc;
+  padding: 10px 20px;
+  background: white;
+  border: 1px solid #e2e8f0;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #64748b;
 }
 
 .year-btn:hover {
-  background-color: #9ee4b7;
+  background: #f0fdfa;
+  border-color: #2dd4bf;
+  color: #0f766e;
 }
 
 .year-btn.active {
-  background-color: #333;
+  background: #0d9488;
   color: white;
-  border-color: #333;
+  border-color: #0d9488;
 }
 
 /* Photo Grid Styling */
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .photo-item {
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   height: 0;
   padding-bottom: 177.78%; /* 9:16 Aspect Ratio (portrait) */
+  transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .photo-image {
@@ -664,10 +689,9 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  filter: blur(10px);
+  filter: blur(8px);
 }
 
 .photo-item:hover .photo-image {
@@ -684,11 +708,12 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.4));
   color: white;
-  padding: 10px;
+  padding: 16px;
   transform: translateY(100%);
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
 }
 
 .photo-item:hover .photo-overlay {
@@ -696,14 +721,17 @@ export default {
 }
 
 .photo-title {
-  margin: 0 0 5px 0;
-  font-size: 1rem;
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .photo-date {
   margin: 0;
   font-size: 0.8rem;
-  opacity: 0.8;
+  opacity: 0.85;
+  font-weight: 400;
 }
 
 /* Lightbox Styling */
@@ -713,11 +741,13 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.92);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(20px);
+  animation: fadeIn 0.3s ease-out;
 }
 
 .lightbox-content {
@@ -728,39 +758,44 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 
 .lightbox-close {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  border: none;
+  top: 30px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 2rem;
-  width: 40px;
-  height: 40px;
+  font-size: 1.8rem;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 1001;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
 }
 
 .lightbox-close:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(45, 201, 165, 0.2);
+  border-color: #2dc9a5;
+  transform: scale(1.1) rotate(90deg);
 }
 
 .lightbox-image {
   max-width: 100%;
-  max-height: 80vh;
+  max-height: 75vh;
   object-fit: contain;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: blur(8px);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
 }
 
 .lightbox-image.loaded {
@@ -770,50 +805,90 @@ export default {
 
 .lightbox-info {
   color: white;
-  padding: 15px 0;
+  padding: 30px 0;
   text-align: center;
   width: 100%;
   max-width: 600px;
 }
 
 .lightbox-title {
-  font-size: 1.4rem;
-  font-weight: 500;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
 }
 
 .lightbox-description {
-  font-size: 1rem;
-  opacity: 0.8;
+  font-size: 1.1rem;
+  opacity: 0.85;
   font-style: italic;
+  font-weight: 400;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Responsive Adjustments */
-.description-text {
-  white-space: nowrap;
-  text-align: center;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+@media (max-width: 1024px) {
+  .photo-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: 700px;
+  }
+  
+  .quote-title {
+    font-size: 2.2rem;
+  }
 }
 
 @media (max-width: 768px) {
-  .description-text {
-    white-space: normal;
+  .photo-view-container {
     padding: 0 15px;
+    margin-top: -10px;
+  }
+  
+  .quote-section {
+    margin-bottom: 30px;
+    padding: 10px 15px 20px 15px;
+  }
+  
+  .quote-title {
+    font-size: 2rem;
+  }
+  
+  .quote-text {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+  
+  .year-selector {
+    margin-bottom: 30px;
+    gap: 8px;
+  }
+  
+  .year-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
   }
   
   .photo-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 400px;
   }
   
   .photo-item {
-    padding-bottom: 177.78%; /* Keep 9:16 aspect ratio on mobile */
+    padding-bottom: 177.78%; /* Keep 9:16 aspect ratio */
   }
   
   .photo-title {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   
   .photo-date {
@@ -821,15 +896,15 @@ export default {
   }
   
   .lightbox-content {
-    padding: 10px;
+    padding: 20px 15px;
   }
   
   .lightbox-close {
-    top: 10px;
-    right: 10px;
-    font-size: 1.5rem;
-    width: 32px;
-    height: 32px;
+    top: 20px;
+    right: 20px;
+    font-size: 1.6rem;
+    width: 45px;
+    height: 45px;
   }
   
   .lightbox-image {
@@ -837,7 +912,71 @@ export default {
   }
   
   .lightbox-info {
-    padding: 10px 0;
+    padding: 20px 0;
+  }
+  
+  .lightbox-title {
+    font-size: 1.4rem;
+  }
+  
+  .lightbox-description {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-view-container {
+    padding: 0 10px;
+    margin-top: -10px;
+  }
+  
+  .quote-section {
+    margin-bottom: 25px;
+    padding: 10px 10px 15px 10px;
+  }
+  
+  .quote-title {
+    font-size: 1.8rem;
+  }
+  
+  .quote-text {
+    font-size: 0.9rem;
+  }
+  
+  .year-selector {
+    margin-bottom: 25px;
+    gap: 6px;
+  }
+  
+  .year-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 300px;
+  }
+  
+  .lightbox-content {
+    padding: 15px 10px;
+  }
+  
+  .lightbox-close {
+    top: 15px;
+    right: 15px;
+    font-size: 1.4rem;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .lightbox-image {
+    max-height: 65vh;
+  }
+  
+  .lightbox-info {
+    padding: 15px 0;
   }
   
   .lightbox-title {
@@ -846,48 +985,6 @@ export default {
   
   .lightbox-description {
     font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .photo-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  }
-  
-  .quote-title {
-    font-size: 1.8rem;
-  }
-  
-  .quote-text {
-    font-size: 1rem;
-  }
-  
-  .lightbox-content {
-    padding: 5px;
-  }
-  
-  .lightbox-close {
-    top: 5px;
-    right: 5px;
-    font-size: 1.2rem;
-    width: 28px;
-    height: 28px;
-  }
-  
-  .lightbox-image {
-    max-height: 65vh;
-  }
-  
-  .lightbox-info {
-    padding: 8px 0;
-  }
-  
-  .lightbox-title {
-    font-size: 1.1rem;
-  }
-  
-  .lightbox-description {
-    font-size: 0.85rem;
   }
 }
 </style>
