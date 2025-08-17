@@ -407,14 +407,6 @@ export default {
         },
         {
           id: 40,
-          url: '/photos/2025/beqaa.jpeg',
-          title: 'The other side',
-          date: 'August 16, 2025',
-          description: '5:45 PM',
-          year: 2025
-        },
-        {
-          id: 41,
           url: '/photos/2025/belou3.jpeg',
           title: 'Tannourine',
           date: 'August 11, 2025',
@@ -422,21 +414,29 @@ export default {
           year: 2025
         },
         {
+          id: 41,
+          url: '/photos/2025/beqaa.jpeg',
+          title: 'The other side',
+          date: 'August 16, 2025',
+          description: '5:45 PM',
+          year: 2025
+        },
+        {
           id: 42,
+          url: '/photos/2025/clouds.jpeg',
+          title: 'Above the clouds, again',
+          date: 'August 16, 2025',
+          description: '6:39 PM',
+          year: 2025
+        },
+        {
+          id: 43,
           url: '/photos/2025/stars2.jpeg',
           title: 'The stars, again',
           date: 'August 17, 2025',
           description: '2:37 AM',
           year: 2025
         },
-        {
-          id: 43,
-          url: '/photos/2025/clouds.jpeg',
-          title: 'Above the clouds, again',
-          date: 'August 16, 2025',
-          description: '6:39 PM',
-          year: 2025
-        }
       ]
     }
   },
