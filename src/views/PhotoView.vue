@@ -392,7 +392,7 @@ export default {
         {
           id: 38,
           url: '/photos/2025/stars1.jpeg',
-          title: 'The stars',
+          title: '34.0178126, 35.8417566',
           date: 'August 2, 2025',
           description: '10:36 PM',
           year: 2025
@@ -415,14 +415,14 @@ export default {
         },
         {
           id: 41,
-          url: '/photos/2025/beqaa.jpeg',
-          title: 'The other side',
-          date: 'August 16, 2025',
-          description: '5:45 PM',
+          url: '/photos/2025/qadisha.jpeg',
+          title: 'Qadisha Valley',
+          date: 'August 12, 2025',
+          description: '7:44 PM',
           year: 2025
         },
         {
-          id: 42,
+          id: 43,
           url: '/photos/2025/clouds.jpeg',
           title: 'Above the clouds, again',
           date: 'August 16, 2025',
@@ -430,13 +430,13 @@ export default {
           year: 2025
         },
         {
-          id: 43,
+          id: 42,
           url: '/photos/2025/stars2.jpeg',
-          title: 'The stars, again',
+          title: '34.2429345, 35.9827942',
           date: 'August 17, 2025',
           description: '2:37 AM',
           year: 2025
-        },
+        }
       ]
     }
   },
