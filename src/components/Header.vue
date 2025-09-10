@@ -25,16 +25,17 @@
             { 'text-teal-600': $route.path === link.path }
           ]"
         >
-          <!-- Icon -->
-          <component 
-            :is="link.icon" 
-            class="w-5 h-5 mobile-pulse"
-          />
+          <!-- Icon with hover underline effect -->
+          <span class="icon-underline inline-flex items-center justify-center">
+            <component 
+              :is="link.icon" 
+              class="w-5 h-5 mobile-pulse"
+            />
+          </span>
           
-          <!-- Text (hidden on small screens, visible on md and up) -->
-          <span class="hidden md:inline relative">
+          <!-- Text (hidden on small screens, visible on md and up) with hover underline effect -->
+          <span class="hidden md:inline text-underline">
             {{ link.name }}
-            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-600 to-teal-500 transition-all duration-300 group-hover:w-full"></span>
           </span>
         </router-link>
         
@@ -94,5 +95,66 @@ export default {
 .custom-class span {
   font-size: 8px;
   font-weight: 700;
+}
+
+/* Hover underline effect for header icons (top and bottom) */
+.icon-underline {
+  position: relative;
+}
+
+.icon-underline::after,
+.icon-underline::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #14b8a6, #22c55e, #059669);
+  bottom: -4px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease-out;
+}
+
+.icon-underline::before {
+  top: -4px;
+  bottom: auto;
+  transform-origin: left;
+}
+
+/* Trigger on nav link hover (group) */
+.group:hover .icon-underline::after,
+.group:hover .icon-underline::before {
+  transform: scaleX(1);
+}
+
+/* Text underline effect matching icon behavior */
+.text-underline {
+  position: relative;
+}
+
+.text-underline::after,
+.text-underline::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #14b8a6, #22c55e, #059669);
+  bottom: -4px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease-out;
+}
+
+.text-underline::before {
+  top: -4px;
+  bottom: auto;
+  transform-origin: left;
+}
+
+.group:hover .text-underline::after,
+.group:hover .text-underline::before {
+  transform: scaleX(1);
 }
 </style>
