@@ -103,7 +103,7 @@ export default {
           id: 4,
           title: 'Heart Disease Risk Prediction',
           date: 'February 7, 2023',
-          description: "This project explores machine learning techniques to predict and analyze heart disease risk.",
+          description: "This project explores machine learning techniques to analyze and predict heart disease risk.",
           technologies: ['R', 'Data Mining', 'Machine Learning'],
           imageUrl: '/projects/heart.jpg',
           status: 'completed',
