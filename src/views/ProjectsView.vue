@@ -101,13 +101,13 @@ export default {
         },
         {
           id: 4,
-          title: 'Hand Sign Recognition',
+          title: 'Heart Disease Risk Prediction',
           date: 'February 7, 2023',
-          description: "This app can recognize these 4 hand gestures in real-time: Peace, Thumbs Up, Fist, and Open Palm.",
-          technologies: ['Computer Vision', 'MediaPipe', 'Web APIs', 'JavaScript'],
-          imageUrl: '/projects/handsign.png',
+          description: "This project explores machine learning techniques to predict and analyze heart disease risk.",
+          technologies: ['R', 'Data Mining', 'Machine Learning'],
+          imageUrl: '/projects/heart.jpg',
           status: 'completed',
-          githubLink: 'https://github.com/joy-andraos/hand-sign-recognition'
+          githubLink: 'https://github.com/joy-andraos/Heart-Disease-Risk-Prediction'
         }
       ],
       swiperModules: [EffectCoverflow, Pagination, Navigation],
