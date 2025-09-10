@@ -407,14 +407,6 @@ export default {
         },
         {
           id: 40,
-          url: '/photos/2025/belou3.jpeg',
-          title: 'Tannourine',
-          date: 'August 11, 2025',
-          description: '12:52 PM',
-          year: 2025
-        },
-        {
-          id: 41,
           url: '/photos/2025/qadisha.jpeg',
           title: 'Qadisha Valley',
           date: 'August 12, 2025',
@@ -422,7 +414,7 @@ export default {
           year: 2025
         },
         {
-          id: 43,
+          id: 41,
           url: '/photos/2025/clouds.jpeg',
           title: 'Above the clouds, again',
           date: 'August 16, 2025',
@@ -435,6 +427,14 @@ export default {
           title: '34.2429345, 35.9827942',
           date: 'August 17, 2025',
           description: '2:37 AM',
+          year: 2025
+        },
+        {
+          id: 43,
+          url: '/photos/2025/dive.jpeg',
+          title: 'Somewhere Underwater',
+          date: 'August 30, 2025',
+          description: '12:33 PM',
           year: 2025
         }
       ]
