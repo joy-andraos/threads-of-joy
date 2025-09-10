@@ -107,7 +107,7 @@ footer {
 }
 
 .social-link.mail::before {
-  background: #0f766e;
+  background: #1e3a8a;
 }
 
 /* Fine-tune: nudge LinkedIn icon slightly right */
