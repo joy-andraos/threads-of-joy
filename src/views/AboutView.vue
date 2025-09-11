@@ -7,7 +7,7 @@
         :showOverlay="true"
         primaryColor="#20c997"
         secondaryColor="#0d9488"
-        accentColor="#ffffff"
+        accentColor="#ECFDF5"
         class="tech-matrix-bg"
       />
       <div class="profile-content">
@@ -36,7 +36,7 @@
         </p>
         <div class="bio-container">
           <p>
-            <Monitor class="inline-icon" />
+            <GraduationCap class="inline-icon" />
             Hey, my name is Joy :) I hold a BS in Computer Science from the Lebanese American University.
           </p>
           <p>
@@ -44,7 +44,7 @@
             I find my heart in building intelligent systems that can see and understand the world around us. My work focuses on deep learning and computer vision applications such as real-time object detection and sign language recognition systems.
           </p>
           <p>
-            <GraduationCap class="inline-icon" />
+            <Monitor class="inline-icon" />
             I'm currently a Tech Instructor at BMB Smart Academy, where I get to fulfill my love for sharing knowledge. I teach Python, Machine Learning and Deep Learning across all levels.
           </p>
           <p>
@@ -217,7 +217,7 @@ export default {
 
 .bio-container p {
   margin-bottom: 20px;
-  color: #e2e8f0;
+  color: #ECFDF5;
   display: flex;
   align-items: flex-start;
   gap: 12px;

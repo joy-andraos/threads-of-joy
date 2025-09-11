@@ -52,9 +52,9 @@ footer {
 .social-link {
   width: 56px;
   height: 56px;
-  background: #ffffff;
+  background: #ECFDF5; /* match light mint above footer */
   border-radius: 50%;
-  border: 3px solid #ffffff;
+  border: 3px solid #ECFDF5;
   position: relative;
   overflow: hidden;
   display: flex;

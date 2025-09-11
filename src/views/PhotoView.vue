@@ -51,7 +51,33 @@
     <!-- Lightbox -->
     <div v-if="lightboxOpen" class="lightbox" @click="closeLightbox">
       <div class="lightbox-content" @click.stop>
-        <button class="lightbox-close" @click="closeLightbox">×</button>
+        <button class="lightbox-close" @click="closeLightbox" aria-label="Close lightbox">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+        <!-- Navigation arrows -->
+        <button 
+          v-if="currentPhotoIndex > 0" 
+          class="lightbox-nav lightbox-prev" 
+          @click.stop="prevPhoto"
+          aria-label="Previous photo"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+        <button 
+          v-if="currentPhotoIndex < selectedYearPhotos.length - 1" 
+          class="lightbox-nav lightbox-next" 
+          @click.stop="nextPhoto"
+          aria-label="Next photo"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
         <img 
           :src="currentPhoto.url"
           :alt="currentPhoto.title"
@@ -793,30 +819,57 @@ export default {
   padding: 40px 20px;
 }
 
-.lightbox-close {
+.lightbox-nav {
   position: fixed;
-  top: 30px;
-  right: 30px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: white;
-  font-size: 1.8rem;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
+  border-radius: 9999px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 1001;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(15px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+}
+
+.lightbox-nav:hover {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.lightbox-prev { left: 24px; }
+.lightbox-next { right: 24px; }
+
+.lightbox-close {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
 }
 
 .lightbox-close:hover {
-  background: rgba(45, 201, 165, 0.2);
-  border-color: #2dc9a5;
-  transform: scale(1.1) rotate(90deg);
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+  transform: scale(1.06);
 }
 
 .lightbox-image {
@@ -930,6 +983,12 @@ export default {
   .lightbox-content {
     padding: 20px 15px;
   }
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+  }
+  .lightbox-prev { left: 12px; }
+  .lightbox-next { right: 12px; }
   
   .lightbox-close {
     top: 20px;
@@ -1002,6 +1061,12 @@ export default {
     width: 40px;
     height: 40px;
   }
+  .lightbox-nav {
+    width: 40px;
+    height: 40px;
+  }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
   
   .lightbox-image {
     max-height: 65vh;
