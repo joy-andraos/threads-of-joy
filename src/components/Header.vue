@@ -21,15 +21,14 @@
           :to="link.path" 
           :class="[
             'flex items-center space-x-2 transition-all duration-300 font-semibold relative group px-4 py-2',
-            'hover:text-black',
-            { 'text-teal-600': $route.path === link.path }
+            'hover:text-black'
           ]"
         >
           <!-- Icon with hover underline effect -->
           <span class="icon-underline inline-flex items-center justify-center">
             <component 
               :is="link.icon" 
-              class="w-5 h-5 mobile-pulse"
+              :class="['w-5 h-5 mobile-pulse', { 'text-[#22c55e]': $route.path === link.path }]"
             />
           </span>
           
@@ -97,13 +96,12 @@ export default {
   font-weight: 700;
 }
 
-/* Hover underline effect for header icons (top and bottom) */
+/* Hover underline effect for header icons (underline only) */
 .icon-underline {
   position: relative;
 }
 
-.icon-underline::after,
-.icon-underline::before {
+.icon-underline::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -112,29 +110,23 @@ export default {
   bottom: -4px;
   left: 0;
   transform: scaleX(0);
-  transform-origin: right;
+  transform-origin: center;
   transition: transform 0.4s ease-out;
 }
 
-.icon-underline::before {
-  top: -4px;
-  bottom: auto;
-  transform-origin: left;
+/* Trigger on nav link hover (group) — mobile only (icons only visible) */
+@media (max-width: 767px) {
+  .group:hover .icon-underline::after {
+    transform: scaleX(1);
+  }
 }
 
-/* Trigger on nav link hover (group) */
-.group:hover .icon-underline::after,
-.group:hover .icon-underline::before {
-  transform: scaleX(1);
-}
-
-/* Text underline effect matching icon behavior */
+/* Text underline effect matching icon behavior (underline only) */
 .text-underline {
   position: relative;
 }
 
-.text-underline::after,
-.text-underline::before {
+.text-underline::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -143,18 +135,11 @@ export default {
   bottom: -4px;
   left: 0;
   transform: scaleX(0);
-  transform-origin: right;
+  transform-origin: center;
   transition: transform 0.4s ease-out;
 }
 
-.text-underline::before {
-  top: -4px;
-  bottom: auto;
-  transform-origin: left;
-}
-
-.group:hover .text-underline::after,
-.group:hover .text-underline::before {
+.group:hover .text-underline::after {
   transform: scaleX(1);
 }
 </style>
