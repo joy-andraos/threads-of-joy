@@ -20,7 +20,7 @@
           :key="link.path"
           :to="link.path" 
           :class="[
-            'flex items-center space-x-2 transition-all duration-300 font-semibold relative group px-4 py-2',
+            'flex items-center space-x-2 transition-all duration-275 font-semibold relative group px-4 py-2',
             'hover:text-black'
           ]"
         >
@@ -82,7 +82,7 @@ export default {
 }
 @media (max-width: 640px) {
   .mobile-pulse:hover {
-    animation: mini-pulse 0.4s cubic-bezier(0.4,0,0.2,1);
+    animation: mini-pulse 0.3s cubic-bezier(0.4,0,0.2,1);
   }
 }
 
@@ -111,7 +111,7 @@ export default {
   left: 0;
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.4s ease-out;
+  transition: transform 0.3s ease-out;
 }
 
 /* Trigger on nav link hover (group) — mobile only (icons only visible) */
@@ -136,7 +136,7 @@ export default {
   left: 0;
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.4s ease-out;
+  transition: transform 0.3s ease-out;
 }
 
 .group:hover .text-underline::after {
